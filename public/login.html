@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <title>Log in - Conspiracy Viability Calculator</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Log in to the Conspiracy Viability Calculator." />
+    <link rel="stylesheet" href="css/pico/pico.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <script defer src="js/login.js"></script>
+  </head>
+  <body>
+    <main class="container login">
+      <h1>Conspiracy Viability Calculator</h1>
+      <article>
+        <form id="loginForm" method="post" action="/login">
+          <h2>Log in</h2>
+          <p id="error" class="notice notice--error" hidden></p>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autocomplete="username" />
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password" />
+          <button type="submit">Log in</button>
+        </form>
+      </article>
+    </main>
+  </body>
+</html>

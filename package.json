@@ -1,0 +1,31 @@
+{
+  "name": "a4-lex-moulton",
+  "version": "0.1.0",
+  "description": "WPI CS 4241 fourth assignment - Lex Moulton",
+  "author": "Lex Moulton",
+  "homepage": "https://a4-lex-moulton.onrender.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lexm2/a4-lex-moulton.git"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@picocss/pico": "^2.1.1",
+    "bcryptjs": "^3.0.3",
+    "compression": "^1.8.2",
+    "connect-mongo": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "express-session": "^1.19.0",
+    "helmet": "^8.3.0",
+    "mongodb": "^7.6.0",
+    "morgan": "^1.12.1",
+    "tweakpane": "^4.0.5"
+  }
+}

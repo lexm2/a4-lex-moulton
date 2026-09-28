@@ -1,0 +1,207 @@
+:root {
+  --teal: #00919C;
+  --amber: #9C5A00;
+  --rust: #9C2400;
+}
+
+[data-theme="dark"] {
+  --pico-background-color: #1A3133;
+  --pico-card-background-color: #33281A;
+  --pico-card-sectioning-background-color: #2B2217;
+  --pico-primary: var(--teal);
+  --pico-primary-background: var(--teal);
+  --pico-primary-border: var(--teal);
+  --pico-primary-hover: #00A9B6;
+  --pico-primary-hover-background: #00A9B6;
+  --pico-primary-hover-border: #00A9B6;
+  --pico-primary-focus: rgba(0, 145, 156, 0.4);
+  --pico-primary-underline: rgba(0, 145, 156, 0.5);
+  --pico-progress-color: var(--teal);
+}
+
+/* ---------- type ---------- */
+
+:root {
+  --pico-font-size: 100%;
+}
+
+h1 {
+  --pico-font-size: 1.5rem;
+  --pico-typography-spacing-top: 1.5rem;
+}
+
+h2 {
+  --pico-font-size: 1.15rem;
+  --pico-typography-spacing-top: 1rem;
+}
+
+/* ---------- header ---------- */
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topbar h1 {
+  margin: 0;
+}
+
+.topbar__user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.topbar__user button {
+  width: auto;
+  margin: 0;
+}
+
+/* ---------- notices ---------- */
+
+.notice {
+  border-left: 4px solid var(--teal);
+}
+
+.notice--error {
+  padding: 0.5rem 0.75rem;
+  border-left-color: var(--rust);
+  background: var(--pico-card-sectioning-background-color);
+}
+
+/* ---------- login ---------- */
+
+.login {
+  max-width: 28rem;
+}
+
+/* ---------- cards ---------- */
+
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.card__title {
+  margin: 0;
+}
+
+.card__actions {
+  display: flex;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.card__actions button {
+  width: auto;
+  margin: 0;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.card__line {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--pico-muted-color);
+}
+
+.card__notes {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+}
+
+.verdict {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.verdict--airtight,
+.verdict--holding  { color: var(--teal); }
+.verdict--leaking  { color: #C8863B; }
+.verdict--busted   { color: #D9603E; }
+
+/* ---------- tweakpane ---------- */
+
+#pane {
+  margin-bottom: var(--pico-block-spacing-vertical);
+  --tp-base-background-color: var(--pico-card-sectioning-background-color);
+  --tp-base-border-radius: var(--pico-border-radius);
+  --tp-base-font-family: var(--pico-font-family);
+  --tp-base-shadow-color: transparent;
+  --tp-blade-border-radius: var(--pico-border-radius);
+  --tp-blade-horizontal-padding: 0.5rem;
+  --tp-blade-value-width: 65%;
+  --tp-container-unit-size: 2rem;
+  --tp-container-unit-spacing: 0.5rem;
+  --tp-container-vertical-padding: 0.75rem;
+  --tp-container-horizontal-padding: 0.75rem;
+  --tp-container-background-color: rgba(255, 255, 255, 0.05);
+  --tp-container-foreground-color: var(--pico-color);
+  --tp-input-background-color: rgba(255, 255, 255, 0.08);
+  --tp-input-background-color-hover: rgba(255, 255, 255, 0.12);
+  --tp-input-background-color-focus: rgba(255, 255, 255, 0.14);
+  --tp-input-background-color-active: rgba(255, 255, 255, 0.16);
+  --tp-input-foreground-color: var(--pico-color);
+  /* the category dropdown uses the button colors, keep it looking like an input */
+  --tp-button-background-color: rgba(255, 255, 255, 0.08);
+  --tp-button-background-color-hover: rgba(255, 255, 255, 0.12);
+  --tp-button-background-color-focus: rgba(255, 255, 255, 0.14);
+  --tp-button-background-color-active: rgba(255, 255, 255, 0.16);
+  --tp-button-foreground-color: var(--pico-color);
+  --tp-label-foreground-color: var(--pico-muted-color);
+  --tp-monitor-background-color: rgba(0, 0, 0, 0.2);
+  --tp-groove-foreground-color: rgba(255, 255, 255, 0.12);
+}
+
+#pane .tp-rotv {
+  font-size: 0.9rem;
+}
+
+/* Make tweakpane styles win over pico css styles */
+#pane input:not([type="checkbox"]),
+#pane select {
+  height: var(--cnt-usz);
+  margin: 0;
+  padding: 0 var(--bld-hp);
+  border: 0;
+  box-shadow: none;
+  background-image: none;
+  font: inherit;
+  line-height: var(--cnt-usz);
+}
+
+#pane select {
+  padding-right: 1.5rem;
+  font-weight: 400;
+}
+
+#pane input:focus,
+#pane select:focus {
+  outline: 2px solid var(--pico-primary-focus);
+}
+
+#pane .tp-lblv_l {
+  align-self: center;
+}
+
+
+#pane .tp-txtv_g {
+  overflow: visible;
+}
+
+#pane .tp-txtv_k {
+  cursor: ew-resize;
+}
+
+#pane .tp-txtv_k::before {
+  opacity: 0.35;
+}

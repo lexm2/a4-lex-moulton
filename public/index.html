@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <title>Conspiracy Viability Calculator</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Estimate how long a conspiracy can stay secret based on how many people are in on it." />
+    <script type="module" src="js/main.js"></script>
+    <link rel="stylesheet" href="css/pico/pico.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="topbar">
+        <h1>Conspiracy Viability Calculator</h1>
+        <form method="post" action="/logout" class="topbar__user">
+          <span>Signed in as <strong id="username"></strong></span>
+          <button type="submit" class="secondary outline">Log out</button>
+        </form>
+      </header>
+
+      <article id="created" class="notice" hidden>
+        No account existed for that username, so we created one for you.
+      </article>
+
+      <button id="newBtn" type="button">New Conspiracy +</button>
+
+      <section id="list" aria-label="Conspiracies"></section>
+    </main>
+
+    <dialog id="entryDialog">
+      <article>
+        <form id="entryForm">
+          <h2 id="formTitle">New Conspiracy</h2>
+          <div id="pane"></div>
+          <p id="formError" class="notice notice--error" hidden>Give the theory a name first.</p>
+          <footer>
+            <button type="button" id="cancel" class="secondary">Cancel</button>
+            <button type="submit" id="submit">Add Conspiracy</button>
+          </footer>
+        </form>
+      </article>
+    </dialog>
+  </body>
+</html>
