@@ -43,6 +43,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .topbar h1 {
@@ -51,12 +52,25 @@ h2 {
 
 .topbar__user {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
   margin: 0;
 }
 
 .topbar__user button {
+  width: auto;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ---------- help ---------- */
+
+#helpDialog li {
+  font-size: 0.9rem;
+}
+
+#helpDialog footer button {
   width: auto;
   margin: 0;
 }
@@ -131,7 +145,7 @@ h2 {
 
 /* ---------- tweakpane ---------- */
 
-#pane {
+.tweak {
   margin-bottom: var(--pico-block-spacing-vertical);
   --tp-base-background-color: var(--pico-card-sectioning-background-color);
   --tp-base-border-radius: var(--pico-border-radius);
@@ -162,13 +176,13 @@ h2 {
   --tp-groove-foreground-color: rgba(255, 255, 255, 0.12);
 }
 
-#pane .tp-rotv {
+.tweak .tp-rotv {
   font-size: 0.9rem;
 }
 
 /* Make tweakpane styles win over pico css styles */
-#pane input:not([type="checkbox"]),
-#pane select {
+.tweak input:not([type="checkbox"]),
+.tweak select {
   height: var(--cnt-usz);
   margin: 0;
   padding: 0 var(--bld-hp);
@@ -179,29 +193,225 @@ h2 {
   line-height: var(--cnt-usz);
 }
 
-#pane select {
+.tweak select {
   padding-right: 1.5rem;
   font-weight: 400;
 }
 
-#pane input:focus,
-#pane select:focus {
+.tweak input:focus,
+.tweak select:focus {
   outline: 2px solid var(--pico-primary-focus);
 }
 
-#pane .tp-lblv_l {
+.tweak .tp-lblv_l {
   align-self: center;
 }
 
 
-#pane .tp-txtv_g {
+.tweak .tp-txtv_g {
   overflow: visible;
 }
 
-#pane .tp-txtv_k {
+.tweak .tp-txtv_k {
   cursor: ew-resize;
 }
 
-#pane .tp-txtv_k::before {
+.tweak .tp-txtv_k::before {
   opacity: 0.35;
+}
+
+/* ---------- leak curve chart ---------- */
+
+.viz {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17rem;
+  gap: 1rem;
+  margin-bottom: var(--pico-block-spacing-vertical);
+}
+
+.viz > *,
+.viz .tweak {
+  margin-bottom: 0;
+}
+
+.viz .tweak,
+.viz .tweak > .tp-rotv {
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .viz {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.chart {
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.chart__plot {
+  position: relative;
+  margin-top: 0.75rem;
+}
+
+.chart__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+}
+
+.chart__head h2 {
+  margin: 0;
+}
+
+.chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-size: 0.85rem;
+  color: var(--pico-muted-color);
+}
+
+.chart__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* short stroke of the series color */
+.chart__key {
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.chart__empty {
+  position: absolute;
+  inset: 45% 0 auto;
+  text-align: center;
+  color: var(--pico-muted-color);
+}
+
+.chart__svg {
+  display: block;
+  overflow: visible;
+}
+
+.chart__band {
+  fill: rgba(255, 255, 255, 0.02);
+}
+
+.chart__band--alt {
+  fill: rgba(255, 255, 255, 0.05);
+}
+
+.chart__band-label,
+.chart__axis-title {
+  fill: var(--pico-muted-color);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+.chart__axis text {
+  fill: var(--pico-muted-color);
+  font-size: 11px;
+}
+
+.chart__axis path,
+.chart__axis line {
+  stroke: rgba(255, 255, 255, 0.2);
+}
+
+.chart__grid line {
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-dasharray: 2 4;
+}
+
+.chart__curve {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  transition: opacity 0.15s;
+}
+
+.chart__curve.is-hot {
+  stroke-width: 3;
+}
+
+.chart__curve.is-dim,
+.chart__now.is-dim {
+  opacity: 0.2;
+}
+
+/* surface ring so overlapping dots stay apart */
+.chart__now,
+.chart__dot {
+  stroke: var(--pico-card-background-color);
+  stroke-width: 2;
+}
+
+.chart__hairline {
+  stroke: var(--pico-muted-color);
+  stroke-width: 1;
+}
+
+.chart__overlay {
+  fill: transparent;
+  cursor: crosshair;
+  outline: none;
+}
+
+.chart__overlay:focus-visible {
+  stroke: var(--pico-primary-focus);
+  stroke-width: 2;
+}
+
+.chart__tooltip {
+  position: absolute;
+  top: 0.5rem;
+  z-index: 1;
+  max-width: 18rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-card-sectioning-background-color);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+
+.chart__tooltip p {
+  margin: 0;
+}
+
+.chart__tip-title {
+  margin-bottom: 0.25rem !important;
+  color: var(--pico-muted-color);
+}
+
+.chart__tip-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.chart__tip-row strong {
+  min-width: 3.5rem;
+  text-align: right;
+}
+
+.chart__tip-row.is-hot .chart__tip-name {
+  color: var(--pico-color);
+}
+
+.chart__tip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--pico-muted-color);
 }

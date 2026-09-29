@@ -131,6 +131,7 @@ app.get(["/", "/index.html"], requireLogin, function (request, response) {
 app.use(express.static("public", { index: false }));
 app.use("/css/pico", express.static(path.join(__dirname, "node_modules/@picocss/pico/css")));
 app.use("/js/tweakpane", express.static(path.join(__dirname, "node_modules/tweakpane/dist")));
+app.use("/js/d3", express.static(path.join(__dirname, "node_modules/d3/dist")));
 
 // ---------- auth routes ----------
 

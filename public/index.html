@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Estimate how long a conspiracy can stay secret based on how many people are in on it." />
+    <script src="js/d3/d3.min.js"></script>
     <script type="module" src="js/main.js"></script>
     <link rel="stylesheet" href="css/pico/pico.min.css" />
     <link rel="stylesheet" href="css/main.css" />
@@ -16,6 +17,7 @@
         <h1>Conspiracy Viability Calculator</h1>
         <form method="post" action="/logout" class="topbar__user">
           <span>Signed in as <strong id="username"></strong></span>
+          <button type="button" id="helpBtn" class="secondary outline">How to use</button>
           <button type="submit" class="secondary outline">Log out</button>
         </form>
       </header>
@@ -24,16 +26,55 @@
         No account existed for that username, so we created one for you.
       </article>
 
+      <section class="viz" aria-labelledby="vizTitle">
+        <article class="chart" id="chart">
+          <div class="chart__head">
+            <h2 id="vizTitle">How fast does the secret get out?</h2>
+            <div class="chart__legend"></div>
+          </div>
+          <p class="chart__empty" hidden>Add a conspiracy to see its leak curve.</p>
+          <div class="chart__tooltip" hidden></div>
+        </article>
+        <aside class="viz__controls">
+          <div id="chartPane" class="tweak"></div>
+        </aside>
+      </section>
+
       <button id="newBtn" type="button">New Conspiracy +</button>
 
       <section id="list" aria-label="Conspiracies"></section>
     </main>
 
+    <dialog id="helpDialog">
+      <article>
+        <h2>How to use</h2>
+        <p>
+          Estimate how long a conspiracy can stay secret, based on David Grimes' 2016 paper. The more people
+          in on it, the faster it leaks.
+        </p>
+        <ul>
+          <li>Press <strong>New Conspiracy +</strong>, fill in the fields and press <strong>Add Conspiracy</strong>. <strong>Edit</strong> and <strong>Delete</strong> are on each card.</li>
+          <li>The chart draws each theory's chance of having leaked over time. Move the mouse over it to see every theory at that year, or click it and use the arrow keys.</li>
+          <li>Hover over a card to highlight its curve, or press <strong>Only this</strong> to draw just that theory. <strong>Show all</strong> brings the rest back.</li>
+        </ul>
+        <p>The controls next to the chart:</p>
+        <ul>
+          <li><strong>leak rate</strong>: leaks per million people per year. Grimes measured 4.09. This only changes the chart, not the cards.</li>
+          <li><strong>years shown</strong>: how many years the chart covers.</li>
+          <li><strong>log time</strong>: spreads out the first few years.</li>
+          <li><strong>today dots</strong>: mark where each theory is now.</li>
+        </ul>
+        <footer>
+          <button type="button" id="helpClose">Got it</button>
+        </footer>
+      </article>
+    </dialog>
+
     <dialog id="entryDialog">
       <article>
         <form id="entryForm">
           <h2 id="formTitle">New Conspiracy</h2>
-          <div id="pane"></div>
+          <div id="pane" class="tweak"></div>
           <p id="formError" class="notice notice--error" hidden>Give the theory a name first.</p>
           <footer>
             <button type="button" id="cancel" class="secondary">Cancel</button>

@@ -1,6 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 import { Pane } from '/js/tweakpane/tweakpane.js'
+import { createChart } from '/js/chart.js'
 
 // id of the row being edited
 let editing = null
@@ -19,6 +20,9 @@ const DEFAULTS = {
 const params = Object.assign({}, DEFAULTS)
 
 let pane = null
+let chart = null
+// id of the card shown alone on the chart
+let solo = null
 
 const buildPane = function () {
   pane = new Pane({ container: document.querySelector('#pane') })
@@ -54,13 +58,24 @@ const render = function (data) {
   const list = document.querySelector('#list')
 
   list.innerHTML = ''
+  if (!data.some((row) => row.id === solo)) solo = null
+
   data.forEach(function (row) {
     list.appendChild(cardFor(row))
   })
+  labelSoloButtons()
+  chart.update(data)
 }
 
 const cardFor = function (row) {
   const card = document.createElement('article')
+
+  card.onpointerenter = function () {
+    chart.highlight(row.id)
+  }
+  card.onpointerleave = function () {
+    chart.highlight(null)
+  }
 
   const header = document.createElement('header')
   header.className = 'card__header'
@@ -88,7 +103,13 @@ const cardFor = function (row) {
   del.dataset.id = row.id
   del.onclick = remove
 
-  actions.append(edit, del)
+  const only = document.createElement('button')
+  only.className = 'outline secondary card__only'
+  only.type = 'button'
+  only.dataset.id = row.id
+  only.onclick = toggleSolo
+
+  actions.append(only, edit, del)
   header.append(title, actions)
 
   const verdict = document.createElement('p')
@@ -117,6 +138,21 @@ const cardFor = function (row) {
   }
 
   return card
+}
+
+const toggleSolo = function (event) {
+  const id = event.target.dataset.id
+  solo = solo === id ? null : id
+
+  chart.solo(solo)
+  labelSoloButtons()
+}
+
+const labelSoloButtons = function () {
+  document.querySelectorAll('.card__only').forEach(function (button) {
+    button.textContent = button.dataset.id === solo ? 'Show all' : 'Only this'
+    button.setAttribute('aria-pressed', button.dataset.id === solo)
+  })
 }
 
 const line = function (text) {
@@ -209,12 +245,22 @@ const reset = function () {
 
 window.onload = function () {
   buildPane()
+  chart = createChart({
+    chart: document.querySelector('#chart'),
+    pane: document.querySelector('#chartPane')
+  })
 
   document.querySelector('#newBtn').onclick = function () {
     reset()
     openDialog()
   }
   document.querySelector('#cancel').onclick = reset
+
+  // instructions show on every load, and again from the header button
+  const help = document.querySelector('#helpDialog')
+  document.querySelector('#helpBtn').onclick = () => help.showModal()
+  document.querySelector('#helpClose').onclick = () => help.close()
+  help.showModal()
   document.querySelector('#entryForm').onsubmit = submit
 
   // the server sends new accounts here with ?created=1
